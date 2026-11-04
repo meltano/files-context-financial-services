@@ -18,6 +18,14 @@ analyze/datasets/financial-services/
   data-handling.yml
 ```
 
+## Organisation knowledge: `#organisation-context`
+
+Every dataset here is tagged `#organisation-context`, the tag of an organisation's knowledge in Meltano
+Cloud. The `get_organisation_knowledge` MCP tool returns the full text of every dataset with it, for an
+AI assistant to read before it models, transforms or queries the workspace's data. In the repository,
+`grep -rl '#organisation-context' analyze/datasets` finds the same set. Tag a dataset of your own the
+same way to add it.
+
 ## Install
 
 Meltano Cloud installs it when Financial Services is chosen as the workspace's industry, in the
@@ -31,7 +39,7 @@ plugins:
   files:
     - name: files-context-financial-services
       variant: matatika
-      pip_url: git+https://github.com/meltano/files-context-financial-services.git@v0.1.0
+      pip_url: git+https://github.com/meltano/files-context-financial-services.git@v0.1.1
       update:
         '*.yml': true
 ```

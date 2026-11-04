@@ -37,4 +37,4 @@ description: |
   Snapshot or keep the change history of the entities that report "as at" a date: account status,
   balance, loan arrears and customer risk rating.
 
-  #financial-services
+  #financial-services #organisation-context
