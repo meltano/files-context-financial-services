@@ -1,0 +1,46 @@
+version: datasets/v0.3
+title: "Financial services: handling the data"
+questions: What care does financial services data need in the warehouse?
+description: |
+  Financial services data is personal, financial and often regulated. These are general practices
+  for a warehouse holding it. They are not legal or compliance advice: the organisation's
+  compliance team decides what applies to it.
+
+  ## Classify the data
+
+  | Class | Examples | Handling |
+  |---|---|---|
+  | Card data | Full card number (PAN), CVV, PIN, magnetic stripe data | **Never load it into the warehouse.** Keep only the payment provider's token and at most the last four digits. Under PCI DSS, CVV and PIN data must not be stored after authorisation |
+  | Identity documents and biometrics | Passport and licence images, selfies | Leave them with the KYC provider. Load only the check result and reference |
+  | Personal data | Name, address, date of birth, email, phone, IP address | Restrict access, mask in non-production and in marts that do not need it |
+  | Financial data | Balances, transactions, income, credit scores | Restrict to the roles that need it. Aggregate where possible |
+  | Account identifiers | Account number, sort code, IBAN | Mask or tokenise outside the models that need them |
+
+  ## Practices
+
+  - **Least privilege.** Separate raw, staging and mart schemas, and grant raw schemas only to the
+    pipelines and the people who maintain them.
+  - **Mask by default.** Hash or mask personal columns in shared marts, and give unmasked access by
+    role.
+  - **No production data in development** without masking.
+  - **Retention.** Financial records are often kept for a fixed number of years for anti-money
+    laundering (AML) and audit purposes, while personal data must not be kept longer than needed.
+    Agree the retention periods with compliance, and model deletion and anonymisation explicitly.
+  - **Audit trail.** Keep load history and model lineage, so a reported figure can be traced to its
+    source records.
+  - **Data subject requests.** Under GDPR and UK GDPR a customer can ask for their data or for its
+    erasure, so know where each person's data lives.
+
+  ## Regulators and rules to be aware of
+
+  Which apply depends on the organisation's country and activities. Common ones:
+
+  - **UK:** Financial Conduct Authority (FCA) and Prudential Regulation Authority (PRA), UK GDPR, the
+    FCA's Consumer Duty.
+  - **EU:** GDPR, PSD2 (payments and open banking), DORA (digital operational resilience).
+  - **US:** SEC, FINRA, OCC, CFPB, state regulators. The Gramm-Leach-Bliley Act (GLBA) covers
+    customer financial information.
+  - **Card payments everywhere:** PCI DSS.
+  - **AML and KYC** obligations apply to most regulated financial services organisations.
+
+  #financial-services

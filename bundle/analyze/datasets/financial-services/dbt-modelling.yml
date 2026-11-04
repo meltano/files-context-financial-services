@@ -1,0 +1,62 @@
+version: datasets/v0.3
+title: "Financial services: modelling it in dbt"
+questions: How should raw financial services data be modelled in dbt so that it reconciles?
+description: |
+  Conventions for building dbt models on raw financial services data. They apply on top of the
+  workspace's usual dbt layout: staging, then intermediate, then marts.
+
+  ## Money
+
+  - **Never use floating point for money.** Use `numeric`/`decimal`, or integers in minor units
+    (pence, cents). Convert minor units in staging and name the column for its unit
+    (`amount_minor`, `amount`).
+  - **Keep the currency next to every amount.** Never sum across currencies. Convert with an explicit
+    rate table and rate date, and keep the original amount and currency as well.
+  - **Make signs explicit.** Sources disagree: some sign debits negative, others give a positive
+    amount with a direction column. Normalise once, in staging, and document it.
+  - **Round only at the end.** Round in the presentation layer, not in intermediate models.
+
+  ## Dates and time
+
+  - Keep **transaction**, **posting** (booking) and **value** (settlement) dates as separate columns,
+    and say which one each report uses.
+  - Store timestamps in UTC. Derive the business date with the organisation's timezone and **cut-off
+    time**: a payment at 23:30 can belong to the next business day.
+  - Weekends and bank holidays shift posting and value dates. Join a calendar table rather than
+    assuming every day is a business day.
+
+  ## History
+
+  - Use **dbt snapshots** (or the source's change history) for slowly changing entities: account
+    status, product terms, customer risk rating, loan arrears status.
+  - Build balances as an **end-of-day snapshot per account** (`account_balance_daily`). Running a sum
+    over all transactions on every query is slow, and it drifts from the ledger when postings are
+    backdated.
+  - Model transactions incrementally on a stable ID, and reprocess a look-back window: sources post
+    late and reverse earlier entries.
+
+  ## Tests
+
+  Add these beside the usual `unique` and `not_null` tests:
+
+  - **Ledger balance:** in double-entry data, each journal's debits and credits sum to zero.
+  - **Reconciliation:** the sum of transactions over a period equals the change in the snapshot
+    balance over the same period, per account.
+  - **Source agreement:** daily totals agree with a control total from the source (a statement,
+    settlement report or general ledger), within an agreed tolerance of zero or a few pence.
+  - **Accepted values** on statuses, transaction types and currency codes (ISO 4217).
+  - **Freshness** on transaction sources, since late data understates balances.
+
+  ## Naming
+
+  - Prefix models by layer (`stg_`, `int_`, `fct_`, `dim_`), and name facts for their grain:
+    `fct_transactions`, `fct_account_balances_daily`, `fct_loan_repayments`.
+  - Keep raw source codes in staging, mapped to readable values, so a figure can be traced to the
+    source.
+
+  ## Sensitive columns
+
+  Tag personal and financial columns in the model YAML (for example `meta: {pii: true}`) and keep
+  them out of marts that do not need them. See *Financial services: handling the data*.
+
+  #financial-services

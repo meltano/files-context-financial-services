@@ -1,0 +1,59 @@
+version: datasets/v0.3
+title: "Financial services: key metrics"
+questions: Which metrics does a financial services organisation run on, and how is each calculated?
+description: |
+  Standard definitions of the metrics financial services organisations report. Confirm each one
+  with the finance or risk team before building it: organisations differ on exclusions, timing and
+  which balance (average or end of period) they use.
+
+  ## Balances and growth
+
+  | Metric | Definition |
+  |---|---|
+  | Total deposits | Sum of end-of-period credit balances on deposit accounts |
+  | Assets under management (AUM) | Market value of client assets managed, at the period end |
+  | Net new money | Inflows less outflows of client money in the period, excluding market movements |
+  | Average balance | Mean of daily end-of-day balances over the period |
+
+  ## Profitability
+
+  | Metric | Definition |
+  |---|---|
+  | Net interest income (NII) | Interest earned on loans and assets less interest paid on deposits and funding |
+  | Net interest margin (NIM) | NII ÷ average interest-earning assets, usually annualised |
+  | Cost-to-income ratio | Operating expenses ÷ operating income |
+  | Fee and commission income | Fees charged in the period, by fee type |
+  | Take rate (payments) | Net revenue ÷ total payment volume |
+
+  ## Credit risk (lending)
+
+  | Metric | Definition |
+  |---|---|
+  | Days past due (DPD) | Days since the oldest unpaid instalment fell due. Usually bucketed: current, 1–29, 30–59, 60–89, 90+ |
+  | Arrears rate | Balance (or count) of loans 30+ DPD ÷ total loan balance (or count) |
+  | Non-performing loan (NPL) ratio | Balance of loans 90+ DPD or otherwise impaired ÷ total gross loan balance |
+  | Charge-off (write-off) rate | Balance written off in the period ÷ average loan balance, usually annualised |
+  | Approval rate | Approved applications ÷ decided applications |
+  | Vintage performance | Arrears or loss rate of loans grouped by the month they were funded, by months on book |
+
+  ## Payments
+
+  | Metric | Definition |
+  |---|---|
+  | Total payment volume (TPV) | Value of successful payments in the period |
+  | Authorisation (success) rate | Authorised attempts ÷ all attempts |
+  | Refund rate | Refunded value ÷ captured value |
+  | Chargeback rate | Chargebacks ÷ settled transactions in the same period (card schemes monitor it by count) |
+  | Fraud rate | Confirmed fraud value ÷ total payment volume, often in basis points |
+
+  ## Customers
+
+  | Metric | Definition |
+  |---|---|
+  | Active customers | Customers with a qualifying action (a transaction, login or balance) in the period. Define "active" explicitly |
+  | Customer acquisition cost (CAC) | Sales and marketing spend ÷ new customers acquired |
+  | Attrition (churn) rate | Customers who closed or went inactive ÷ customers at the start of the period |
+  | Products per customer | Active accounts and products ÷ active customers |
+  | Onboarding conversion | Customers who pass KYC and fund an account ÷ applications started |
+
+  #financial-services

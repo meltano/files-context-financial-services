@@ -1,0 +1,40 @@
+version: datasets/v0.3
+title: "Financial services: data model"
+questions: What are the core entities of financial services data, and at what grain should each be modelled?
+description: |
+  The entities most financial services data reduces to, with the grain and key of each. Use it to
+  map raw source tables onto a consistent model. Names are suggestions; keep the organisation's own
+  terms where they already exist.
+
+  | Entity | Grain (one row per…) | Notes |
+  |---|---|---|
+  | `customer` (party) | person or business | Individuals and businesses are often one party table with a type. Joint accounts link several parties to one account |
+  | `product` | product version | Interest rates, fees and terms change: version them rather than overwrite |
+  | `account` | account | Current, savings, card, loan or wallet. Has an owner party, product, currency, open/close dates and a status |
+  | `account_balance_daily` | account per day | End-of-day snapshot. Most balance reporting reads this, not the transactions |
+  | `transaction` (posting) | ledger posting | Signed amount in minor units, currency, transaction, posting and value dates, type, counterparty, status |
+  | `payment` | payment attempt | Authorisation, capture, settlement, refund and chargeback are events of a payment, each with its own timestamp |
+  | `loan` (facility) | loan | Principal, rate, term, drawdown date, maturity date and status |
+  | `repayment_schedule` | instalment | Due date, principal and interest due. Compare with actual repayments to get arrears |
+  | `repayment` | repayment received | Allocated to fees, interest and principal |
+  | `application` | application | Product applied for, channel, decision, decision reason and timestamps. The input to funnel and approval-rate metrics |
+  | `kyc_check` | check | Provider, check type, result and timestamp. Never copy the identity documents themselves |
+  | `card` | card | Linked to an account. Hold only a token or last four digits, never the full card number |
+  | `merchant` | merchant | For acquirers and card issuers: merchant category code (MCC), country |
+  | `complaint` / `case` | case | Category, opened and resolved timestamps, outcome |
+
+  ## Relationships
+
+  - A **party** holds one or more **accounts**, and an account can have several parties.
+  - An **account** has many **transactions** and one **balance** per day.
+  - A **loan** is an account with a **repayment schedule** and **repayments**.
+  - A **payment** produces one or more **transactions** as it moves through its lifecycle.
+  - An **application** becomes an **account** or **loan** when it is approved and funded.
+
+  ## Status and history
+
+  Account, loan and payment statuses change (for example `active` → `in_arrears` → `charged_off`).
+  Snapshot or keep the change history of the entities that report "as at" a date: account status,
+  balance, loan arrears and customer risk rating.
+
+  #financial-services

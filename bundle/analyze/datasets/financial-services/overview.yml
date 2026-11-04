@@ -1,0 +1,51 @@
+version: datasets/v0.3
+title: "Financial services: industry overview"
+questions: What does a financial services organisation's data look like, and where does it come from?
+description: |
+  Industry context for this workspace, for the people and AI assistants working in it. It has no
+  query: it is a briefing to read before modelling or analysing this organisation's data.
+
+  ## Segments
+
+  Financial services covers organisations whose product is money, credit, risk or advice. The
+  segments differ in which entities and metrics matter most:
+
+  - **Retail and business banking:** deposit and current accounts, savings, overdrafts, cards and
+    loans. Balances, transactions and interest drive the data.
+  - **Lending:** consumer loans, mortgages, business loans, buy-now-pay-later and asset finance.
+    Applications, decisions, drawdowns, repayment schedules, arrears and losses drive the data.
+  - **Payments:** acquiring, issuing, money transfer and payment initiation. High-volume transactions
+    with authorisations, captures, settlements, refunds, chargebacks and fees.
+  - **Wealth and asset management:** portfolios, holdings, trades, valuations, fees and assets under
+    management (AUM).
+  - **Insurance:** quotes, policies, premiums, claims and reserves.
+  - **Fintech and embedded finance:** usually a subscription or transaction-fee business on top of one
+    of the above, often through a partner bank or platform.
+
+  ## Typical source systems
+
+  | System | Examples | What it holds |
+  |---|---|---|
+  | Core banking / ledger | Thought Machine, Mambu, Temenos, an in-house ledger | Accounts, balances, postings |
+  | Loan management | Mambu, an in-house platform | Loans, schedules, repayments, arrears |
+  | Payments | Stripe, Adyen, Checkout.com, GoCardless, Modulr | Payments, refunds, disputes, payouts, fees |
+  | CRM | Salesforce (often Financial Services Cloud), HubSpot | Customers, applications, opportunities, cases |
+  | Accounting / ERP | Xero, QuickBooks, NetSuite, Sage | General ledger, invoices, journals |
+  | KYC / AML | Onfido, ComplyAdvantage, Sumsub | Identity checks, screening results, risk ratings |
+  | Open banking | TrueLayer, Plaid, Yapily | Linked external accounts and transactions |
+  | Product analytics | Segment, Amplitude, Google Analytics | Funnels, onboarding, app usage |
+
+  ## What makes the data different
+
+  - **Money must reconcile.** Totals have to agree with the ledger, the bank statement and the
+    finance team's numbers to the penny. A model that is "close" is wrong.
+  - **History matters.** Balances, statuses, rates and risk ratings change over time, and reports are
+    run "as at" a date. Keep the history rather than only the latest state.
+  - **Several dates per event.** A transaction has a transaction date, a posting (booking) date and a
+    value (settlement) date, and they differ across weekends, holidays and cut-off times.
+  - **The data is sensitive and regulated.** Personal, financial and card data needs controlled
+    access, masking and retention rules. See *Financial services: handling the data*.
+
+  Related datasets: *data model*, *metrics*, *modelling it in dbt*, *handling the data*.
+
+  #financial-services
