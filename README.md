@@ -31,21 +31,23 @@ same way to add it.
 Meltano Cloud installs it when Financial Services is chosen as the workspace's industry, in the
 setup wizard or with the `set_organisation_context` MCP tool.
 
-In a Meltano project of your own:
+In a Meltano project of your own, save this definition to a file outside the project, for example
+`/tmp/files-context-financial-services.yml`:
 
 ```yaml
-# meltano.yml
-plugins:
-  files:
-    - name: files-context-financial-services
-      variant: matatika
-      pip_url: git+https://github.com/meltano/files-context-financial-services.git@v0.1.1
-      update:
-        '*.yml': true
+name: files-context-financial-services
+namespace: files_context_financial_services
+variant: matatika
+pip_url: git+https://github.com/meltano/files-context-financial-services.git@v0.1.1
+update:
+  '*.yml': true
 ```
 
+then add the bundle from the project directory. `meltano add` writes the datasets; a plain
+`meltano install` does not:
+
 ```sh
-meltano install files files-context-financial-services
+meltano add --plugin-type files files-context-financial-services --from-ref /tmp/files-context-financial-services.yml
 ```
 
 `update: '*.yml': true` lets `meltano upgrade files` refresh the datasets from a newer version.
