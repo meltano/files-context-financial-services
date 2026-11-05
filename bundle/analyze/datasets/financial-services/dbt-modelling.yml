@@ -20,8 +20,9 @@ description: |
 
   - Keep **transaction**, **posting** (booking) and **value** (settlement) dates as separate columns,
     and say which one each report uses.
-  - Store timestamps in UTC. Derive the business date with the organisation's timezone and **cut-off
-    time**: a payment at 23:30 can belong to the next business day.
+  - Store timestamps in UTC (GMT+00:00, no daylight saving). Derive the business date with the
+    organisation's timezone (UK: GMT in winter, BST = GMT+01:00 in summer) and **cut-off time**: a
+    payment at 23:30 GMT can belong to the next business day.
   - Weekends and bank holidays shift posting and value dates. Join a calendar table rather than
     assuming every day is a business day.
 

@@ -42,7 +42,8 @@ description: |
   - **History matters.** Balances, statuses, rates and risk ratings change over time, and reports are
     run "as at" a date. Keep the history rather than only the latest state.
   - **Several dates per event.** A transaction has a transaction date, a posting (booking) date and a
-    value (settlement) date, and they differ across weekends, holidays and cut-off times.
+    value (settlement) date, and they differ across weekends, holidays and cut-off times. UK cut-offs
+    are set in local time: GMT in winter, BST (GMT+01:00) in summer.
   - **The data is sensitive and regulated.** Personal, financial and card data needs controlled
     access, masking and retention rules. See *Financial services: handling the data*.
 

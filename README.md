@@ -38,7 +38,7 @@ In a Meltano project of your own, save this definition to a file outside the pro
 name: files-context-financial-services
 namespace: files_context_financial_services
 variant: matatika
-pip_url: git+https://github.com/meltano/files-context-financial-services.git@v0.1.1
+pip_url: git+https://github.com/meltano/files-context-financial-services.git@v0.1.2
 update:
   '*.yml': true
 ```
@@ -54,7 +54,7 @@ meltano add --plugin-type files files-context-financial-services --from-ref /tmp
 
 ## Release
 
-Tag a version (`git tag -a v0.1.1 -m v0.1.1 && git push --tags`) and bump the `pip_url` ref in the
+Tag a version (`git tag -a v0.1.2 -m v0.1.2 && git push --tags`) and bump the `pip_url` ref in the
 Meltano Cloud registry definition (`plugins/files/files-context-financial-services--matatika.yml`).
 
 These datasets are general industry context, not legal, regulatory or financial advice.
